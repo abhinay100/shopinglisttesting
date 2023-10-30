@@ -14,27 +14,33 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import com.androiddevs.shoppinglisttestingyt.getOrAwaitValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
+import javax.inject.Inject
+import javax.inject.Named
 
 /**
  * Created by Abhinay on 17/10/23.
  */
 @ExperimentalCoroutinesApi
-@RunWith(AndroidJUnit4::class)
 @SmallTest
+@HiltAndroidTest
 class ShoppingDaoTest {
+
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var database: ShoppingItemDatabase
+    @Inject
+    @Named("test_db")
+    lateinit var database: ShoppingItemDatabase
     private lateinit var dao: ShoppingDao
 
     @Before
     fun setup() {
-        database = Room.inMemoryDatabaseBuilder(
-            ApplicationProvider.getApplicationContext(),
-            ShoppingItemDatabase::class.java
-        ).allowMainThreadQueries().build()
+        hiltRule.inject()
         dao = database.shoppingDao()
     }
 
