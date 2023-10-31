@@ -13,7 +13,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import com.androiddevs.shoppinglisttestingyt.ui.ShoppingFragment
 import com.androiddevs.shoppinglisttestingyt.getOrAwaitValue
+import com.androiddevs.shoppinglisttestingyt.launchFragmentInHiltContainer
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import javax.inject.Inject
@@ -47,6 +49,13 @@ class ShoppingDaoTest {
     @After
     fun tearDown() {
         database.close()
+    }
+
+    @Test
+    fun testLaunchFragmentInHiltContainer() {
+        launchFragmentInHiltContainer<ShoppingFragment> {
+
+        }
     }
 
     @Test
